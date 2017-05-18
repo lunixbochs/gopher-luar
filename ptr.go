@@ -1,9 +1,9 @@
-package luar // import "layeh.com/gopher-luar"
+package luar
 
 import (
 	"reflect"
 
-	"github.com/yuin/gopher-lua"
+	"github.com/lunixbochs/luaish"
 )
 
 func checkPtr(L *lua.LState, idx int) (ref reflect.Value, mt *Metatable) {

@@ -1,9 +1,9 @@
-package luar // import "layeh.com/gopher-luar"
+package luar
 
 import (
 	"reflect"
 
-	"github.com/yuin/gopher-lua"
+	"github.com/lunixbochs/luaish"
 )
 
 // New creates and returns a new lua.LValue for the given value.

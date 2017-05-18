@@ -1,9 +1,9 @@
-package luar // import "layeh.com/gopher-luar"
+package luar
 
 import (
 	"reflect"
 
-	"github.com/yuin/gopher-lua"
+	"github.com/lunixbochs/luaish"
 )
 
 func sliceIndex(L *lua.LState) int {

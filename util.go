@@ -1,4 +1,4 @@
-package luar // import "layeh.com/gopher-luar"
+package luar
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/yuin/gopher-lua"
+	"github.com/lunixbochs/luaish"
 )
 
 func check(L *lua.LState, idx int, kind reflect.Kind) (ref reflect.Value, mt *Metatable, isPtr bool) {

@@ -3,7 +3,7 @@ package luar
 import (
 	"testing"
 
-	"github.com/yuin/gopher-lua"
+	"github.com/lunixbochs/luaish"
 )
 
 type TestArrayOneString [1]string

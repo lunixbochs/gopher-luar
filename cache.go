@@ -1,10 +1,10 @@
-package luar // import "layeh.com/gopher-luar"
+package luar
 
 import (
 	"container/list"
 	"reflect"
 
-	"github.com/yuin/gopher-lua"
+	"github.com/lunixbochs/luaish"
 )
 
 func addMethods(L *lua.LState, c *Config, vtype reflect.Type, tbl *lua.LTable, ptrReceiver bool) {

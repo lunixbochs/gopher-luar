@@ -1,9 +1,9 @@
-package luar // import "layeh.com/gopher-luar"
+package luar
 
 import (
 	"reflect"
 
-	"github.com/yuin/gopher-lua"
+	"github.com/lunixbochs/luaish"
 )
 
 // LState is an wrapper for gopher-lua's LState. It should be used when you

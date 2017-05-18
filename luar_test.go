@@ -3,7 +3,7 @@ package luar
 import (
 	"testing"
 
-	"github.com/yuin/gopher-lua"
+	"github.com/lunixbochs/luaish"
 )
 
 func Test_luar_complex128(t *testing.T) {
