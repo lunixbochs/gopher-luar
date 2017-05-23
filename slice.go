@@ -11,7 +11,17 @@ func sliceIndex(L *lua.LState) int {
 	key := L.CheckAny(2)
 
 	switch converted := key.(type) {
-	case lua.LNumber:
+	case lua.LInt:
+		index := int(converted)
+		if index < 1 || index > ref.Len() {
+			L.ArgError(2, "index out of range")
+		}
+		val := ref.Index(index - 1)
+		if (val.Kind() == reflect.Struct || val.Kind() == reflect.Array) && val.CanAddr() {
+			val = val.Addr()
+		}
+		L.Push(New(L, val.Interface()))
+	case lua.LFloat:
 		index := int(converted)
 		if index < 1 || index > ref.Len() {
 			L.ArgError(2, "index out of range")
@@ -66,7 +76,7 @@ func sliceLen(L *lua.LState) int {
 		L.RaiseError("invalid operation on slice pointer")
 	}
 
-	L.Push(lua.LNumber(ref.Len()))
+	L.Push(lua.LInt(ref.Len()))
 	return 1
 }
 
@@ -82,7 +92,7 @@ func sliceCall(L *lua.LState) int {
 			return 0
 		}
 		item := ref.Index(i).Interface()
-		L.Push(lua.LNumber(i + 1))
+		L.Push(lua.LInt(i + 1))
 		L.Push(New(L, item))
 		i++
 		return 2
@@ -109,7 +119,7 @@ func sliceEq(L *lua.LState) int {
 
 func sliceCapacity(L *lua.LState) int {
 	ref, _, _ := check(L, 1, reflect.Slice)
-	L.Push(lua.LNumber(ref.Cap()))
+	L.Push(lua.LInt(ref.Cap()))
 	return 1
 }
 

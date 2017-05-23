@@ -30,7 +30,7 @@ func chanLen(L *lua.LState) int {
 	if isPtr {
 		L.RaiseError("invalid operation on chan pointer")
 	}
-	L.Push(lua.LNumber(ref.Len()))
+	L.Push(lua.LInt(ref.Len()))
 	return 1
 }
 

@@ -17,7 +17,7 @@ func ExampleLState() {
 		for i := 1; i <= L.GetTop(); i++ {
 			total += L.CheckInt(i)
 		}
-		L.Push(lua.LNumber(total))
+		L.Push(lua.LInt(total))
 		return 1
 	}
 

@@ -12,8 +12,13 @@ func arrayIndex(L *lua.LState) int {
 	key := L.CheckAny(2)
 
 	switch converted := key.(type) {
-	case lua.LNumber:
-		index := int(converted)
+	case lua.LFloat, lua.LInt:
+		index := 0
+		if tmp, ok := key.(lua.LFloat); ok {
+			index = int(tmp)
+		} else {
+			index = int(key.(lua.LInt))
+		}
 		if index < 1 || index > ref.Len() {
 			L.ArgError(2, "index out of range")
 		}
@@ -66,7 +71,7 @@ func arrayNewIndex(L *lua.LState) int {
 func arrayLen(L *lua.LState) int {
 	ref, _, _ := check(L, 1, reflect.Array)
 	ref = reflect.Indirect(ref)
-	L.Push(lua.LNumber(ref.Len()))
+	L.Push(lua.LInt(ref.Len()))
 	return 1
 }
 
@@ -80,7 +85,7 @@ func arrayCall(L *lua.LState) int {
 			return 0
 		}
 		item := ref.Index(i).Interface()
-		L.Push(lua.LNumber(i + 1))
+		L.Push(lua.LInt(i + 1))
 		L.Push(New(L, item))
 		i++
 		return 2

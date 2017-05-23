@@ -58,7 +58,7 @@ func Test_func_unpacking(t *testing.T) {
 
 	fn := func(name string, count int) []lua.LValue {
 		s := make([]lua.LValue, count+1)
-		s[0] = lua.LNumber(count)
+		s[0] = lua.LInt(count)
 		for i := 1; i < count+1; i++ {
 			s[i] = lua.LString(name)
 		}
@@ -105,7 +105,7 @@ func Test_func_luareturntype(t *testing.T) {
 	fn := func(x ...float64) *lua.LTable {
 		tbl := L.NewTable()
 		for i := len(x) - 1; i >= 0; i-- {
-			tbl.Insert(len(x)-i, lua.LNumber(x[i]))
+			tbl.Insert(len(x)-i, lua.LFloat(x[i]))
 		}
 		return tbl
 	}

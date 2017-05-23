@@ -77,7 +77,7 @@ func mapLen(L *lua.LState) int {
 	if isPtr {
 		L.RaiseError("invalid operation on map pointer")
 	}
-	L.Push(lua.LNumber(ref.Len()))
+	L.Push(lua.LInt(ref.Len()))
 	return 1
 }
 

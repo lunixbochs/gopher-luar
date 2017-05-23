@@ -13,19 +13,19 @@ import (
 //  --------------------------------------------------
 //  nil             LNil             No
 //  Bool            LBool            No
-//  Int             LNumber          No
-//  Int8            LNumber          No
-//  Int16           LNumber          No
-//  Int32           LNumber          No
-//  Int64           LNumber          No
-//  Uint            LNumber          No
-//  Uint8           LNumber          No
-//  Uint16          LNumber          No
-//  Uint32          LNumber          No
-//  Uint64          LNumber          No
+//  Int             LInt             No
+//  Int8            LInt             No
+//  Int16           LInt             No
+//  Int32           LInt             No
+//  Int64           LInt             No
+//  Uint            LInt             No
+//  Uint8           LInt             No
+//  Uint16          LInt             No
+//  Uint32          LInt             No
+//  Uint64          LInt             No
 //  Uintptr         *LUserData       No
-//  Float32         LNumber          No
-//  Float64         LNumber          No
+//  Float32         LFloat           No
+//  Float64         LFloat           No
 //  Complex64       *LUserData       No
 //  Complex128      *LUserData       No
 //  Array           *LUserData       Yes
@@ -57,11 +57,11 @@ func New(L *lua.LState, value interface{}) lua.LValue {
 	case reflect.Bool:
 		return lua.LBool(val.Bool())
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		return lua.LNumber(float64(val.Int()))
+		return lua.LInt(val.Int())
 	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-		return lua.LNumber(float64(val.Uint()))
+		return lua.LInt(val.Uint())
 	case reflect.Float32, reflect.Float64:
-		return lua.LNumber(val.Float())
+		return lua.LFloat(val.Float())
 	case reflect.Array, reflect.Chan, reflect.Map, reflect.Ptr, reflect.Slice, reflect.Struct:
 		ud := L.NewUserData()
 		ud.Value = val.Interface()
@@ -115,7 +115,15 @@ func lValueToReflect(L *lua.LState, v lua.LValue, hint reflect.Type, tryConvertP
 		return val.Convert(hint)
 	case lua.LChannel:
 		return reflect.ValueOf(converted).Convert(hint)
-	case lua.LNumber:
+	case lua.LInt:
+		var val reflect.Value
+		if hint.Kind() == reflect.String {
+			val = reflect.ValueOf(converted.String())
+		} else {
+			val = reflect.ValueOf(converted)
+		}
+		return val.Convert(hint)
+	case lua.LFloat:
 		var val reflect.Value
 		if hint.Kind() == reflect.String {
 			val = reflect.ValueOf(converted.String())
